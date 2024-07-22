@@ -43,6 +43,19 @@ class Student
             return false;
         }
     }
+
+    // read all data
+    public function get_all_data()
+    {
+        $sql_query = "SELECT * FROM " . $this->table_name;
+        $std_obj = $this->conn->prepare($sql_query);
+
+        // execute query
+        $std_obj->execute();
+
+        // return the result data
+        return $std_obj->get_result();
+    }
 }
 
 ?>
