@@ -56,6 +56,20 @@ class Student
         // return the result data
         return $std_obj->get_result();
     }
+
+
+    // read single student data
+    public function get_single_student()
+    {
+        $sql_query = "SELECT * FROM " . $this->table_name . " WHERE id = ?";
+        $obj = $this->conn->prepare($sql_query);
+        $obj->bind_param("i", $this->id);
+        $obj->execute();
+
+        $data = $obj->get_result();
+
+        return $data->fetch_assoc();
+    }
 }
 
 ?>

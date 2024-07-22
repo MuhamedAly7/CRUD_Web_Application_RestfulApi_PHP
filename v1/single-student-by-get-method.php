@@ -2,10 +2,8 @@
 
 // include headers
 header("Access-Control-Allow-Origin: *");
-// It allow all origings like localhost, any domain or any subdomain
-header("Content-type: application/jason; charset=UTF8");
 // Data which we are getting inside request
-header("Access-Contol-Allow-Methods: POST");
+header("Access-Contol-Allow-Methods: GET");
 // Method type 
 
 
@@ -18,12 +16,12 @@ $db = new Database();
 // Create object for student
 $student = new Student($db);
 
-if($_SERVER['REQUEST_METHOD'] === 'POST')
+if($_SERVER['REQUEST_METHOD'] === 'GET')
 {
-    $param = json_decode(file_get_contents("php://input"));
-    if(!empty($param->id))
+    $student_id = isset($_GET['id']) ? intval($_GET['id']) : "";
+    if(!empty($student_id))
     {
-        $student->id = $param->id;
+        $student->id = $student_id;
         $student_data = $student->get_single_student();
         if(!empty($student_data))
         {
@@ -32,7 +30,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
                 "status" => 1,
                 "data" => $student_data
             ));
-            // print_r($student_data);
         }
         else
         {
