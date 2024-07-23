@@ -100,6 +100,32 @@ class Student
 
 
     }
+
+    // delete student
+    public function delete_student()
+    {
+        // Query
+        $delete_query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
+
+        // Prepare query 
+        $delete_obj = $this->conn->prepare($delete_query);
+
+        // sanitization
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        // bind parameter
+        $delete_obj->bind_param("i", $this->id);
+
+        // executing querys
+        if($delete_obj->execute())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 ?>
